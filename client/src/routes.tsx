@@ -1,9 +1,9 @@
-import { Navigate, RouteObject } from "react-router-dom"
-import { RootLayout } from "@/layouts/RootLayout"
-import { ErrorPage } from "@/pages/ErrorPage"
-import { TaskListPage } from "@/pages/tasks/TaskListPage"
-import { NewTaskPage } from "@/pages/tasks/NewTaskPage"
-import { NotFoundPage } from "@/pages/NotFoundPage"
+import { Navigate, RouteObject } from "react-router-dom";
+import { RootLayout } from "@/layouts/RootLayout";
+import { ErrorPage } from "@/pages/ErrorPage";
+import { TaskListPage } from "@/pages/tasks/TaskListPage";
+import { NewTaskPage } from "@/pages/tasks/NewTaskPage";
+import { NotFoundPage } from "@/pages/NotFoundPage";
 
 export const routes: RouteObject[] = [
   {
@@ -29,4 +29,4 @@ export const routes: RouteObject[] = [
       },
     ],
   },
-]
+];
