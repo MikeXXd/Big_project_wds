@@ -3,15 +3,22 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { THEME_OPTIONS } from "@/constants/constants";
+import { useAuth } from "@/features/authentication";
 import { useTheme } from "@/hooks/useTheme";
-import { Menu, Moon } from "lucide-react";
+import { DropdownMenuPortal } from "@radix-ui/react-dropdown-menu";
+import { ChevronDown, Menu, Moon } from "lucide-react";
 import { Sun } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function NavBar() {
+  const { user, logout } = useAuth();
   return (
     <nav className="sticky top-0 z-10 border-b p-4 bg-white dark:bg-slate-950">
       <div className="container flex item-center justify-between gap-4">
@@ -20,7 +27,26 @@ export function NavBar() {
           <ThemeToggleButton />
           <div className="hidden sm:flex">
             <NavItem to="/tasks" label="Task Board" />
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className=" data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800"
+                  >
+                    <span>{user.email}</span>
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <NavItem to="/login" label="Login" />
+            )}
           </div>
+          {/* small screen menu -------------------------------------------------------*/}
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="flex sm:hidden">
               <Button
@@ -34,8 +60,29 @@ export function NavBar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
-              <Link to="/tasks">Task board</Link>
+                <Link to="/tasks">Task board</Link>
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {/* Login -------------------------------------------------------*/}
+              {user ? (
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger asChild>
+                    <span className="mr-auto">{user.email}</span>
+                    <ChevronDown className="w-4 h-4 ml-2" />
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem onClick={logout}>
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+              ) : (
+                <DropdownMenuItem>
+                  <Link to="/login">Login</Link>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

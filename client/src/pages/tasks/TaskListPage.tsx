@@ -11,7 +11,7 @@ export function TaskListPage() {
         btnSection={
           <Button variant="outline" asChild>
             <Link to="new" className="flex gap-1">
-              <Plus className="w-4 h-4" /> Task
+              <Plus className="w-4 h-4" />
             </Link>
           </Button>
         }
